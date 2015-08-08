@@ -1,0 +1,112 @@
+#!/bin/sh
+#
+# This script takes in
+#  $1	The list of oxidizer to fuel ratios TIMES TEN
+#  $2	The list of Chamber Pressures in PSI
+#  $3 	Nozzle Expansion Ratio
+#  $4	The fuel
+#  $5	Fuel's cpropep linkage (optional)
+#  $6	Nitrous cpropep linkage
+#
+# It prints four numbers per result
+#  ISP
+#  C* in m/s
+#  Cf
+#  Ep, exit pressure in atm
+
+xflag=FALSE
+if [ "x$1" = x-x ] ; then
+	echo xflag 1>&2
+	xflag=TRUE
+	shift
+fi
+
+OFVALUES=$1
+CPVALUES=$2
+NZR=$3
+FUEL=$4
+
+if [ $# -ne 4 -a $# -ne 6 ] ; then 
+	echo Usage: $0 '<O/F ratio * 10> <chamber pressure> <nozzle ratio> <fuel>'
+	exit 1
+fi
+
+CPRODIR=/cygdrive/c/daniel/personal/rocketry/cpropep
+CPRODIR=/Users/sdaniel/hsim04/cpropep/cpropep
+CPRODIR=/cygdrive/c/users/sdaniel/personal/hsim04/cpropepWin
+
+T1=runcp.pro
+T2=cpr.out
+
+#
+# NOTE: cpropep numbers are also found in fuel_gen.c and liquid_fuel.csv
+#
+
+# These line numbers work for the version taken from code.google.com
+N2O=721	# Nitrous Oxide
+IPA=559 # ISOPROPYL ALCOHOL
+# These line numbers work for the original 1986 version.
+N2O=657	# Nitrous Oxide
+IPA=502 # ISOPROPYL ALCOHOL
+
+FUELX="NONE"
+
+if [ x$FUEL = xipa ]; then
+	FUELX=$IPA
+fi
+
+if [ x$FUEL = xIPA ]; then
+	FUELX=$IPA
+fi
+
+if [ $# -gt 4 ] ; then
+	FUELX=$5
+	N2O=$6
+fi
+
+if [ $FUELX = NONE ] ; then
+	echo Unknown fuel $FUEL. 1>&2
+	exit 1;
+fi
+
+cd $CPRODIR
+
+for OF in $OFVALUES
+do
+	for CP in $CPVALUES
+	do
+		cat << EOF > ${T1}
+Propellant
++${N2O}	$OF g	#nitrous
++${FUELX}	10 g	#${FUEL}
+
+FR
++chamber_pressure $CP psi
++supersonic_area_ratio $NZR
+
+EOF
+
+		if [ $xflag = TRUE ] ; then
+			echo running CPROPEP
+			echo INPUT IS:
+			cat ${T1}
+			echo DONE
+			echo
+		fi
+		./cpropep -f ${T1} > ${T2}
+		if [ $xflag = TRUE ] ; then
+			echo OUTPUT IS:
+			cat ${T2}
+			echo DONE
+			echo
+		fi
+		(
+			grep 'Isp/g' ${T2}
+			grep '^C\*' ${T2}
+			grep '^Cf' ${T2}
+			grep '^Pressure' ${T2}
+		) | sed -e 's/.* //'
+
+		rm ${T1} ${T2}
+	done
+done
