@@ -57,6 +57,7 @@ char *columns_1[] ={
 #define	VAPOR_DENSITY	2
 #define	VAPOR_ENERGY	3
 #define	VAPOR_ENTHALPY	4
+#define	VAPOR_ENTROPY	5
 #define	Cv		6
 #define	Cp		7
 #define	SOUND_SPEED	8
@@ -89,6 +90,7 @@ static void *vapor_density_ic;
 static void *vapor_energy_ic;
 static void *liquid_density_ic;
 static void *liquid_energy_ic;
+static void *vapor_entropy_ic;
 static void *saturation_temp_ic;
 static void *Cv_ic;
 static void *Cp_ic;
@@ -110,6 +112,7 @@ n2o_thermo_init_1()
 	static double	n2o_vapor_pressure[MAX_THERMO];
 	static double	n2o_vapor_density[MAX_THERMO];
 	static double	n2o_vapor_energy[MAX_THERMO];
+	static double	n2o_vapor_entropy[MAX_THERMO];
 	static double	n2o_Cv[MAX_THERMO];
 	static double	n2o_Cp[MAX_THERMO];
 	static double	n2o_SoundSpeed[MAX_THERMO];
@@ -168,6 +171,10 @@ n2o_thermo_init_1()
 		n2o_vapor_energy[i] = atof(ptrs[vapor_energy_col]) *
 			n2o_mols_per_kg * 1000.;
 
+		/* convert from kJ/mol to J/kg */
+		n2o_vapor_entropy[i] = atof(ptrs[VAPOR_ENTROPY]) *
+			n2o_mols_per_kg * 1000.;
+
 		/* convert from  J/mol*K  to J/kg*K */
 		n2o_Cv[i] = atof(ptrs[Cv]) * n2o_mols_per_kg;
 
@@ -192,6 +199,9 @@ n2o_thermo_init_1()
 
 	vapor_energy_ic = interpolate_1d_context(
 				n2o_temp, n2o_vapor_energy, n);
+
+	vapor_entropy_ic = interpolate_1d_context(
+				n2o_temp, n2o_vapor_entropy, n);
 
 	Cv_ic = interpolate_1d_context(
 				n2o_temp, n2o_Cv, n);
@@ -343,6 +353,12 @@ double
 vapor_energy(double temp)
 {
 	return i_i(temp, vapor_energy_ic);
+}
+
+double
+vapor_entropy(double temp)
+{
+	return i_i(temp, vapor_entropy_ic);
 }
 
 /*

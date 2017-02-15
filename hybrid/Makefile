@@ -17,7 +17,7 @@
 
 CFLAGS=-Wall -I../lib
 TESTS=n2o_test tank_test fuel_test injector_test chamber_test chem_test
-PROGRAMS: hsim report createNzr fuel.csv ${TESTS}
+PROGRAMS: hsim report createNzr fuel.csv n2orifice ${TESTS}
 
 #
 # Programs
@@ -32,6 +32,11 @@ report: report.o state.o ../lib/librsim.a libhybrid.a
 
 createNzr: createNzr.c cpp.h libhybrid.a ../lib/librsim.a
 	gcc -Wall -o createNzr createNzr.c libhybrid.a ../lib/librsim.a
+
+n2orifice.o: linkage.h state.h ../lib/scio.h ../lib/rsim.h ../lib/ts_parse.h
+
+n2orifice: n2orifice.o libhybrid.a ../lib/librsim.a state.o
+	gcc ${CFLAGS} -o n2orifice n2orifice.o state.o libhybrid.a ../lib/librsim.a
 
 fuel_gen: fuel_gen.c
 	gcc -Wall -o fuel_gen fuel_gen.c
