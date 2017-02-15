@@ -43,6 +43,7 @@ double saturation_pressure(double temp);
 double liquid_energy(double temperature);
 double vapor_energy(double temperature);
 double cpcv(double temperature);
+double soundspeed(double temperature);
 double temp_from_pressure(double pressure);
 void n2o_thermo_init();
 void errors_init();
