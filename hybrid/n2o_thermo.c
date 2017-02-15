@@ -59,6 +59,7 @@ char *columns_1[] ={
 #define	VAPOR_ENTHALPY	4
 #define	Cv		6
 #define	Cp		7
+#define	SOUND_SPEED	8
 
 /*
  * Define the second thermo data file.
@@ -91,6 +92,7 @@ static void *liquid_energy_ic;
 static void *saturation_temp_ic;
 static void *Cv_ic;
 static void *Cp_ic;
+static void *SoundSpeed_ic;
 
 
 extern char *myname;
@@ -110,6 +112,7 @@ n2o_thermo_init_1()
 	static double	n2o_vapor_energy[MAX_THERMO];
 	static double	n2o_Cv[MAX_THERMO];
 	static double	n2o_Cp[MAX_THERMO];
+	static double	n2o_SoundSpeed[MAX_THERMO];
 
 	vapor_energy_col = use_enthalpy? VAPOR_ENTHALPY: VAPOR_ENERGY;
 
@@ -170,6 +173,9 @@ n2o_thermo_init_1()
 
 		/* convert from  J/mol*K  to J/kg*K */
 		n2o_Cp[i] = atof(ptrs[Cp]) * n2o_mols_per_kg;
+
+		/* sound is in mtrs /sec, which is good */
+		n2o_SoundSpeed[i] = atof(ptrs[SOUND_SPEED]);
 	}
 	fclose(input);
 
@@ -192,6 +198,9 @@ n2o_thermo_init_1()
 
 	Cp_ic = interpolate_1d_context(
 				n2o_temp, n2o_Cp, n);
+
+	SoundSpeed_ic = interpolate_1d_context(
+				n2o_temp, n2o_SoundSpeed, n);
 
 }
 
@@ -343,6 +352,15 @@ double
 cpcv(double temp)
 {
 	return i_i(temp, Cp_ic) / i_i(temp, Cv_ic);
+}
+
+/*
+ * Speed of sound in m/s at temp
+ */
+double
+sound_speed(double temp)
+{
+	return i_i(temp, SoundSpeed_ic);
 }
 
 double
