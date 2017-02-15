@@ -287,4 +287,6 @@ tank_boil_off(double filltemp)
 
 	vapor_mass = n2o_liquid_mass * (1 -r) / r;
 	vent_mass = vapor_mass - (tank_n2o_mass - n2o_liquid_mass);
+	if (vent_mass < 0.)
+		warn_negative_vent_to_fill = 1;
 }

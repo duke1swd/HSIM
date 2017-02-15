@@ -23,6 +23,7 @@
 #include "state.h"
 
 int	sim_type;
+int	dry_fire;
 double	tank_energy;
 double	tank_n2o_mass;
 double	tank_pressure;
@@ -98,3 +99,4 @@ int warn_exit_pressure;
 int n2o_thermo_error;
 int warn_supply_pressure;
 double warn_supply_pressure_drop_value;
+int warn_negative_vent_to_fill;

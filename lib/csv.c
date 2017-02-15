@@ -34,6 +34,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <strings.h>
 
 char *myname;
@@ -56,7 +57,8 @@ csv_read(FILE *input, char *buffer, int size, char **ptrs, int n)
 			fprintf(stderr, "%s: input line is longer than "
 				"%d chars\n",
 				myname, size);
-			buffer[40] = '\0';
+			if (size < 40)
+				buffer[40] = '\0';
 			fprintf(stderr, "  line begins: %s\n", buffer);
 			fprintf(stderr, "%s: csv read aborting\n", myname);
 			return -1;

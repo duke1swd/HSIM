@@ -37,6 +37,7 @@ errors_init()
 	warn_core_throat_ratio_value = WARN_CORE_THROAT_RATIO_2;
 	warn_injector_pressure_drop_value = 1e8;
 	warn_supply_pressure = 0;
+	warn_negative_vent_to_fill = 0;
 }
 
 void
@@ -90,6 +91,12 @@ print_errors(FILE *output)
 				PRESSURE, "psi"),
 			scio_convert(WARN_SUPPLY_PRESSURE_DROP,
 				PRESSURE, "psi"));
+	}
+
+	if (warn_negative_vent_to_fill) {
+		fprintf(output, "WARNING: N2O Mass Vented to Fill (%.2f kg) "
+			"is negative.\n",
+			scio_convert(vent_mass, MASS, "kg"));
 	}
 }
 

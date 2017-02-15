@@ -86,6 +86,14 @@ chamber()
 	double hi_cp;
 	double lo_cp;
 
+	if (dry_fire) {
+		c_star = 0.;
+		chamber_pressure = 0.;
+		thrust = 0.;
+		isp = 0.;
+		return;
+	}
+
 	/* iterate to steady-state on cpropep solution */
 	counter = 0;
 	hi_set = 0;

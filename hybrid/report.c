@@ -784,12 +784,19 @@ print_report()
 	printf("\tInit Temp                %5.0f F\n", 
 			scio_convert(column_init[TANK_TEMPERATURE],
 				TEMPERATURE, "F"));
-	printf("\tInit N2O Mass            %5.2f kg\n", 
+	printf("\tInit N2O Total Mass      %5.2f kg\n", 
 			scio_convert(column_init[TANK_N2O_MASS],
+				MASS, "kg"));
+	printf("\tInit N2O Liquid Mass     %5.2f kg\n", 
+			scio_convert(column_init[N2O_LIQUID_MASS],
 				MASS, "kg"));
 	printf("\tInit N2O Density         %5.2f g/cc\n", 
 			scio_convert(column_init[N2O_LIQUID_DENSITY],
 				DENSITY, "g/cc"));
+	printf("\tInit N2O Liquid Volume   %5.2f cc\n", 
+			scio_convert(column_init[N2O_LIQUID_MASS] /
+				    column_init[N2O_LIQUID_DENSITY],
+				VOLUME, "cc"));
 	if (vent_mass_set) {
 		printf("\tN2O Vented to chill      %5.2f kg\n",
 			scio_convert(vent_mass,

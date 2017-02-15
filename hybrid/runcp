@@ -34,6 +34,7 @@ fi
 CPRODIR=/cygdrive/c/daniel/personal/rocketry/cpropep
 CPRODIR=/Users/sdaniel/hsim04/cpropep/cpropep
 CPRODIR=/cygdrive/c/users/sdaniel/personal/hsim04/cpropepWin
+CPRODIR=~/HSIM/cpropepWin
 
 T1=runcp.pro
 T2=cpr.out

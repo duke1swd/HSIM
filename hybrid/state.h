@@ -36,6 +36,11 @@ extern int sim_type;
 #define	LIQUID	2
 
 /*
+ * Simulating a dry firing (no ignition)?  Boolean.
+ */
+extern int dry_fire;
+
+/*
  * Tank State
  */
 
@@ -261,3 +266,5 @@ extern int n2o_thermo_error;	/* zero or one of the two below */
 #define	WARN_SUPPLY_PRESSURE_DROP (6894.7573 * 100.)	/* 100 psi */
 extern int warn_supply_pressure;
 extern double warn_supply_pressure_drop_value;
+
+extern int warn_negative_vent_to_fill;		/* supply tank too cold or dip tube too long */

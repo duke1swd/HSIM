@@ -574,9 +574,13 @@ grok_args(int argc, char **argv)
 
 	errors = 0;
 	set_defaults();
-	while ((c = getopt(argc, argv, "vwlEN:h")) != EOF)
+	while ((c = getopt(argc, argv, "DvwlEN:h")) != EOF)
 	switch (c) {
 	
+		case 'D':
+			dry_fire = 1;
+			break;
+
 		case 'v':
 		case 'w':
 		case 'l':

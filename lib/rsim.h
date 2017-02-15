@@ -62,3 +62,9 @@ int interpolate_1d(double x, double *y, void *context);
 char *
 ds_copy(char *s);
 
+/*
+ * Another input reader.
+ * Same as fgets, but ignores comment lines and allows continuation lines
+ */
+char *
+cfgets(char *buffer, int size, FILE *input);

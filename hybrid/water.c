@@ -58,6 +58,15 @@ struct scio_input_parameter_s scio_input[] = {
 	0,
 },
 {
+	"water_density",
+	DENSITY,
+	0,
+	&lfueldensity,
+	1,
+	0,
+
+},
+{
 	"time_total",
 	TIME,
 	REQUIRED,
@@ -95,7 +104,7 @@ initialize()
 	use_enthalpy = 1;
 	constants_init();
 	time_increment = 1./5000.;
-
+	lfueldensity = 1000.;  // kg per cubic meter
 
 	ts_parse_init();
 	scio_init(scio_input, sizeof (scio_input) / sizeof (scio_input[0]));
@@ -137,7 +146,6 @@ sim1(double cd)
 	chamber_pressure = atmosphere_pressure;
 	nitrogen_pressure_initial = pressure_init;
 	nitrogen_pressure = nitrogen_pressure_initial;
-	lfueldensity = 1000.;  // kg per cubic meter
 	nitrogen_gamma = 1.4;
 	lfuelvolume = water_volume;
 	lfuelmass = water_volume * lfueldensity;

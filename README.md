@@ -6,11 +6,22 @@ INTRODUCTION
 This is HSIM 1.0.
 Based on HSIM 0.4
 
-At present the models assume the tank is a cylinder and that the any
-solid fuel grain is a cylinder (i.e. has a single port).  The assumption
-of self-pressurized nitrous is pretty baked into the model, but the
-other simplifying assumptions are lightly used and could probably be
-changed without much difficulty.
+
+This simulator works on two basic types of rocket motors.
+
+First, nitrous hybrid:
+
+In nitrous hybrid mode the models assume the tank is a cylinder and
+that the any solid fuel grain is a cylinder (i.e. has a single port).
+The assumption of self-pressurized nitrous is pretty baked into the
+model, but the other simplifying assumptions are lightly used and
+could probably be changed without much difficulty.
+
+Second, nitrous hybrid liquid biprop:
+
+In liquid mode the models assume a blow-down pressurized motor,
+with self-pressurized nitrous and compressed nitrogen pressurized
+liquid fuel.
 
 This pre-release version of the simulator is intended for use by people
 who have substantial knowledge of small hybrid or liquid motor design.
