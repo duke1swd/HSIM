@@ -347,6 +347,9 @@ static char *column_names[] = {
 
 	"nitrogen pressure",
 #define	LFUEL_PRESSURE		21
+
+	"XXX LF injector pressure ratio",	/* computed */
+#define	IPL_RATIO		22
 };
 
 #define	NCOL	(sizeof (column_names) / sizeof (column_names[0]))
@@ -521,6 +524,9 @@ input_2(int nptrs, char **ptrs)
 			    atof(ptrs[column_numbers[FUEL_FLOW_RATE]]);
 		else if (i == IP_RATIO)
 			v = atof(ptrs[column_numbers[TANK_PRESSURE]]) /
+			    atof(ptrs[column_numbers[CHAMBER_PRESSURE]]);
+		else if (i == IPL_RATIO)
+			v = atof(ptrs[column_numbers[LFUEL_PRESSURE]]) /
 			    atof(ptrs[column_numbers[CHAMBER_PRESSURE]]);
 		else if (column_numbers[i] >= 0)
 			v = atof(ptrs[column_numbers[i]]);
@@ -899,10 +905,15 @@ print_report()
 	}
 	printf("\tTank/Chamber Pressure Ratio\n");
 	printf("\t                        Min     Max    Average\n");
-	printf("\t                        %.2f    %.2f    %.2f\n",
+	printf("\t   N2O                  %.2f    %.2f    %.2f\n",
 			column_min[IP_RATIO],
 			column_max[IP_RATIO],
 			column_sum[IP_RATIO] / (double) nrow);
+	if (sim_type == LIQUID)
+		printf("\t   LFuel                %.2f    %.2f    %.2f\n",
+			column_min[IPL_RATIO],
+			column_max[IPL_RATIO],
+			column_sum[IPL_RATIO] / (double) nrow);
 
 	/* Section 6 */
 	printf("\nSection 6: Nozzle Summary        Min     Max    Average\n");
