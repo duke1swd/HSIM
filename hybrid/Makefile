@@ -17,7 +17,7 @@
 
 CFLAGS=-Wall -I../lib
 TESTS=n2o_test tank_test fuel_test injector_test chamber_test chem_test
-PROGRAMS: hsim report createNzr fuel.csv n2orifice ${TESTS}
+PROGRAMS: hsim report createNzr fuel.csv n2orifice water ${TESTS}
 
 #
 # Programs

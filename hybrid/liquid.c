@@ -35,7 +35,6 @@
 
 extern char *myname;
 
-double nitrogen_gamma;
 double lf_pvgamma;
 
 void
@@ -68,7 +67,7 @@ liquid_init()
 
 	nitrogen_pressure = nitrogen_pressure_initial;
 
-	nitrogen_gamma = 1.4;
+	nitrogen_gamma = 1.41;
 
 	lf_pvgamma = nitrogen_pressure *
 		pow(lfueltankvolume - lfuelvolume, nitrogen_gamma);

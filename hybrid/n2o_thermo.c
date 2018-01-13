@@ -88,6 +88,7 @@ char *columns_2[] = {
 static void *vapor_pressure_ic;
 static void *vapor_density_ic;
 static void *vapor_energy_ic;
+static void *ve_temp_ic;
 static void *liquid_density_ic;
 static void *liquid_energy_ic;
 static void *vapor_entropy_ic;
@@ -199,6 +200,8 @@ n2o_thermo_init_1()
 
 	vapor_energy_ic = interpolate_1d_context(
 				n2o_temp, n2o_vapor_energy, n);
+	ve_temp_ic = interpolate_1d_context(
+				n2o_vapor_energy, n2o_temp, n);
 
 	vapor_entropy_ic = interpolate_1d_context(
 				n2o_temp, n2o_vapor_entropy, n);
@@ -383,4 +386,10 @@ double
 temp_from_pressure(double pressure)
 {
 	return i_i(pressure, saturation_temp_ic);
+}
+
+double
+temp_from_vapor_energy(double vapor_energy)
+{
+	return i_i(vapor_energy, ve_temp_ic);
 }

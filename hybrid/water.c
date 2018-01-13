@@ -146,7 +146,7 @@ sim1(double cd)
 	chamber_pressure = atmosphere_pressure;
 	nitrogen_pressure_initial = pressure_init;
 	nitrogen_pressure = nitrogen_pressure_initial;
-	nitrogen_gamma = 1.4;
+	nitrogen_gamma = 1.41;
 	lfuelvolume = water_volume;
 	lfuelmass = water_volume * lfueldensity;
 	lfueltankvolume = tank_volume;
@@ -255,7 +255,7 @@ doit()
 	printf("\tFinal Presure (measured) is %.2f\n", 
 		scio_convert(pressure_final-atmosphere_pressure, PRESSURE, P_UNIT));
 
-	vr = exp(log(pressure_init/pressure_final)/1.4);
+	vr = exp(log(pressure_init/pressure_final)/nitrogen_gamma);
 	tank_volume = vr * water_volume / (vr - 1.);
 
 	cd = calc_cd();
