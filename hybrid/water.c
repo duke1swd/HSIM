@@ -243,6 +243,7 @@ doit()
 	if (cd < 0.)
 		return;
 
+	printf("NOTE: All pressures a GAUGE pressures\n\n");
 	printf("Constant Pressure Calculated Cd is %.3f\n",
 		water_volume/(liquid_injector_area * lfuelinjector_count) *
 			sqrt(lfueldensity/(pressure_init + pressure_final - 2 * atmosphere_pressure))/total_time);
