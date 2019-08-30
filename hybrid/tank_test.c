@@ -214,8 +214,8 @@ doit()
 		if (tank_energy < 1.) {
 			printf("FAILED: enery == 0\n");
 			break;
-		} else if (tank_energy > 1e6) {
-			printf("FAILED: energy > 1,000,000\n");
+		} else if (tank_energy > 1e12) {
+			printf("FAILED: energy > 1e12\n");
 			break;
 		}
 		if (i++ > 1000) {
